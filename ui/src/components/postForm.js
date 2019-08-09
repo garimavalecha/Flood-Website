@@ -6,6 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import { Formik } from "formik";
 import AutoComplete from "./common/autocomplete";
+import axios from "axios";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -48,11 +49,12 @@ export default function CustomerForm(props) {
           mobileNumber: "",
           title: "",
           tags: "",
-          location: "",
+          longitude: "",
+          latitude: "",
           description: "",
           address: ""
         }}
-        onSubmit={values => {
+        onSubmit={async values => {
           if (!loading) {
             setLoading(true);
           }
@@ -60,7 +62,8 @@ export default function CustomerForm(props) {
           const reqData = {
             data: values
           };
-          console.log(values);
+          const res = await axios.post("/api/postEvent", values);
+          console.log(res);
         }}
         render={({ values, handleReset, handleChange, handleSubmit }) => (
           <div className={classes.paper}>
@@ -110,7 +113,7 @@ export default function CustomerForm(props) {
                 </Grid>
               </Grid>
               <Grid container direction={"column"}>
-                <Grid item xs={9}>
+                <Grid item xs={6}>
                   <TextField
                     name="address"
                     label={"Address"}
@@ -124,51 +127,64 @@ export default function CustomerForm(props) {
                   />
                 </Grid>
               </Grid>
-
-              <Grid item xs={3}>
-                <TextField
-                  name={"title"}
-                  label={"Title"}
-                  value={values.title}
-                  type="text"
-                  fullWidth
-                  required={true}
-                  onChange={handleChange}
-                  variant={"outlined"}
-                  margin={"normal"}
-                />
+              <Grid container spacing={2}>
+                <Grid item xs={3}>
+                  <TextField
+                    name={"title"}
+                    label={"Title"}
+                    value={values.title}
+                    type="text"
+                    fullWidth
+                    required={true}
+                    onChange={handleChange}
+                    variant={"outlined"}
+                    margin={"normal"}
+                  />
+                </Grid>
+                <Grid item xs={3}>
+                  <TextField
+                    name={"tags"}
+                    label={"Tags"}
+                    value={values.tags}
+                    type="text"
+                    fullWidth
+                    required={true}
+                    onChange={handleChange}
+                    variant={"outlined"}
+                    margin={"normal"}
+                  />
+                </Grid>
               </Grid>
-
-              <Grid item xs={3}>
-                <TextField
-                  name={"tags"}
-                  label={"Tags"}
-                  value={values.tags}
-                  type="text"
-                  fullWidth
-                  required={true}
-                  onChange={handleChange}
-                  variant={"outlined"}
-                  margin={"normal"}
-                />
+              <Grid container spacing={2}>
+                <Grid item xs={3}>
+                  <TextField
+                    name={"latitude"}
+                    label={"latitude"}
+                    value={values.latitude}
+                    type="text"
+                    fullWidth
+                    required={true}
+                    onChange={handleChange}
+                    variant={"outlined"}
+                    margin={"normal"}
+                  />
+                </Grid>{" "}
+                <Grid item xs={3}>
+                  <TextField
+                    name={"longitude"}
+                    label={"longitude"}
+                    value={values.longitude}
+                    type="text"
+                    fullWidth
+                    required={true}
+                    onChange={handleChange}
+                    variant={"outlined"}
+                    margin={"normal"}
+                  />
+                </Grid>
               </Grid>
-
-              <Grid item xs={3}>
-                <TextField
-                  name={"location"}
-                  label={"Location"}
-                  value={values.location}
-                  type="text"
-                  fullWidth
-                  required={true}
-                  onChange={handleChange}
-                  variant={"outlined"}
-                  margin={"normal"}
-                />
-              </Grid>
-
               <Grid container direction={"column"}>
-                <Grid item xs={9}>
+                <Grid item xs={6}>
                   <TextField
                     name="description"
                     label={"Description"}
@@ -184,9 +200,6 @@ export default function CustomerForm(props) {
               </Grid>
               <Grid container spacing={2}>
                 <Grid item xs={2}>
-                  {/* <SaveButton loading={loading} handleSubmit={handleSubmit} /> */}
-                </Grid>
-                <Grid item xs={2} className={classes.root}>
                   <Button
                     variant="contained"
                     type="submit"
@@ -194,6 +207,8 @@ export default function CustomerForm(props) {
                   >
                     {"Save"}
                   </Button>
+                </Grid>
+                <Grid item xs={2} className={classes.root}>
                   <Button
                     variant="contained"
                     type="reset"

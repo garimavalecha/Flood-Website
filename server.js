@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const apiRoutes = require("./routes/api-routes");
 
-mongoose.connect("url here", { useNewUrlParser: true });
+mongoose.connect("mongodb://localhost:27017/myapp", { useNewUrlParser: true });
 mongoose.set("useCreateIndex", true);
 mongoose.set("useFindAndModify", false);
 const db = mongoose.connection;

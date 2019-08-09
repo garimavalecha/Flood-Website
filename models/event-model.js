@@ -10,17 +10,13 @@ const eventSchema = new Schema(
     title: { type: String, required: "Title is required." },
     tags: [{ type: String }],
     coordinates: {
-      type: Array,
-      validate: [arrayLimit, "{PATH} exceeds the limit of 2"]
+      longitude: { type: String, required: "longitude is required." },
+      latitude: { type: String, required: "latitude is required." }
     },
     description: { type: String }
   },
   { collection: "events", strict: true, versionKey: false }
 );
-
-function arrayLimit(val) {
-  return val.length <= 2;
-}
 
 const Event = mongoose.model("Event", eventSchema);
 
