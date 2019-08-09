@@ -1,8 +1,11 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
+const path = require('path');
 const bodyParser = require('body-parser');
 const apiRoutes = require('./routes/api-routes');
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
 
 mongoose.connect('mongodb://flood:password12@ds213615.mlab.com:13615/flood-data', {useNewUrlParser: true});
 mongoose.set('useCreateIndex', true);
@@ -22,9 +25,10 @@ app.use(bodyParser.json());
 app.use('/api', apiRoutes);
 
 app.get('/', function(request, response) {
-  response.sendFile(__dirname + '/views/index.html');
+  response.render( __dirname + '/views/index.pug');
 });
 
 const listener = app.listen(3000, function() {
   console.log('Your app is listening on port 3000');
 });
+
