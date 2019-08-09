@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -22,15 +24,21 @@ function Post(props) {
     phone_number,
     title
   } = props.data;
+  const link = "/posts/" + props.data._id;
   return (
-    <div>
-      <Paper className={classes.root}>
+    <Paper className={classes.root} style={{ width: "75%", margin: "10px" }}>
+      <Link
+        to={{
+          pathname: link,
+          state: { data: props.data }
+        }}
+      >
         <Typography variant="h5" component="h3">
           {name}.
         </Typography>
         <Typography component="p">{description}</Typography>
-      </Paper>
-    </div>
+      </Link>
+    </Paper>
   );
 }
 
@@ -55,11 +63,16 @@ class PostList extends Component {
 
   render() {
     return (
-      <div>
+      <Grid
+        container
+        direction="column"
+        alignContent="center"
+        // alignItems="center"
+      >
         {this.state.data.map(data => {
           return <Post data={data} />;
         })}
-      </div>
+      </Grid>
     );
   }
 }

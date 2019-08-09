@@ -9,7 +9,7 @@ const Home = props => {
   return (
     <Switch>
       <Route path="/form" exact component={PostForm} />
-      <Route path="/post" component={PostDetails} />
+      <Route path="/posts/:postID" exact component={PostDetails} />
       <Route path="/" exact component={PostList} />
       <Redirect to="/" />
     </Switch>
