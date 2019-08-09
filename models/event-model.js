@@ -7,12 +7,12 @@ const eventSchema = new Schema({
   phone_number: {type: Number, required: 'Phone Number is required.'},
   address: {type: String, required: 'Address is required.'},
   title: {type: String, required: 'Title is required.'},
-  tags: [{type: String}],
+  tags: [{type: String, required: 'Tag(s) is(are) required.'}],
   coordinates: {
-    type: Array,
-    validate: [arrayLimit, '{PATH} exceeds the limit of 2']
+    latitude: {type: Number, required: 'Latitude is required.'},
+    longitude: {type: Number, required: 'Longitude is required.'}
   },
-  description: {type: String}
+  description: {type: String, required: 'Desription is rrquired.'}
 }, {collection: 'events', strict: true, versionKey: false}); 
 
 function arrayLimit(val) {
