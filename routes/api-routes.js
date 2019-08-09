@@ -1,10 +1,21 @@
 const axios = require('axios');
 const router = require('express').Router();
 const Event = require('../models/event-model');  
-const Tags = require('../models/tag-model');  
 
 router.post('/postEvent', async function(req, res) {
-  res.send("Needs to be implemented, post");
+  try{
+    const event = new Event(req.body).save(async (err, event) => {
+      if (err) {
+        res.json({success: false, error: err});
+        return;
+      }
+      const events = await Event.find({}, '-id').lean();
+      res.json({success: true, events});
+    });
+  }
+  catch(err) {
+    res.json({success: false, error: err});
+  }
 });
 
 router.get('/getAllEvents', async function(req, res) {
@@ -14,7 +25,6 @@ router.get('/getAllEvents', async function(req, res) {
   }catch(err){
     res.json({error: err});    
   }
-  // res.send("Needs to be implemented, get");
 });
 
 module.exports = router;
