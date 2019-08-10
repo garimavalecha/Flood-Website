@@ -9,7 +9,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 var server = http.createServer(app)
 
-mongoose.connect('mongodb://flood:password12@ds213615.mlab.com:13615/flood-data', {useNewUrlParser: true});
+mongoose.connect(
+  'mongodb://flood:password12@ds213615.mlab.com:13615/flood-data', 
+{useNewUrlParser: true});
 mongoose.set('useCreateIndex', true);
 mongoose.set('useFindAndModify', false);
 const db = mongoose.connection;
@@ -29,6 +31,10 @@ const port = 8000
 
 app.get('/', function(request, response) {
   response.render( __dirname + '/views/index.pug');
+});
+
+app.get('/test', function(request, response) {
+  response.render( __dirname + '/views/test.pug');
 });
 
 app.set('port', process.env.PORT || 8000);

@@ -8,10 +8,10 @@ const eventSchema = new Schema({
   address: {type: String, required: 'Address is required.'},
   title: {type: String, required: 'Title is required.'},
   tags: [{type: String, required: 'Tag(s) is(are) required.'}],
-  coordinates: {
-    latitude: {type: Number, required: 'Latitude is required.'},
-    longitude: {type: Number, required: 'Longitude is required.'}
-  },
+  // coordinates: {
+  //   latitude: {type: Number, required: 'Latitude is required.'},
+  //   longitude: {type: Number, required: 'Longitude is required.'}
+  // },
   description: {type: String, required: 'Desription is rrquired.'}
 }, {collection: 'events', strict: true, versionKey: false}); 
 
